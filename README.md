@@ -4,9 +4,23 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 > **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
 
-## Step 1: Start Metro
+## Step 1: Install Dependencies
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+First, you will need to install all the dependencies for this project. Make sure you have node version 18+.
+
+Run the following command from the root of your React Native project:
+
+```sh
+# Using npm
+npm install
+
+# OR using Yarn
+yarn
+```
+
+## Step 2: Start Metro
+
+Now, you will need to run **Metro**, the JavaScript build tool for React Native.
 
 To start the Metro dev server, run the following command from the root of your React Native project:
 
@@ -18,9 +32,9 @@ npm start
 yarn start
 ```
 
-## Step 2: Build and run your app
+## Step 3: Build and run your app
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+With Metro and your Android device emulator running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
 
 ### Android
 
@@ -62,7 +76,7 @@ If everything is set up correctly, you should see your new app running in the An
 
 This is one way to run your app — you can also build it directly from Android Studio or Xcode.
 
-## Step 3: Modify your app
+## Step 4: Modify your app
 
 Now that you have successfully run the app, let's make changes!
 
@@ -85,6 +99,22 @@ You've successfully run and modified your React Native App. :partying_face:
 # Troubleshooting
 
 If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+
+Most of the time cleaning your project solves the issue. Run these to clean everything:
+
+```sh
+cd android
+./gradlew clean
+cd ..
+npx react-native clean
+npm start -- --reset-cache
+```
+
+Then rebuild:
+
+```sh
+npm run android
+```
 
 # Learn More
 
