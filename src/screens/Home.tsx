@@ -9,7 +9,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       <Text style={styles.subtitle}>This is a simple example.</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
