@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Logo from '../svg/logo';
 
 export const Header = () => (
   <View style={styles.container}>
-    <Text style={styles.phoneText}>Rimac Logo</Text>
+    <Logo />
     <TouchableOpacity>
       <Text style={styles.phoneText}>📞 (01) 411 6001</Text>
     </TouchableOpacity>
