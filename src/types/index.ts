@@ -1,12 +1,13 @@
-export type ApiUser = {
+export type User = {
   name: string;
   lastName: string;
   birthDay: string;
 };
 
 export type FormDataHome = {
-  documentNumber: string;
+  dni: string;
   phone: string;
+  acceptedTerms: boolean;
 };
 
 export type Plan = {
@@ -18,7 +19,7 @@ export type Plan = {
 
 export type AppState = {
   formData: FormDataHome | null;
-  apiUser: ApiUser | null;
+  apiUser: User | null;
   selectedPlan: (Plan & { finalPrice?: number }) | null;
   forWho: 'me' | 'someone' | null;
 };
