@@ -10,36 +10,39 @@ import {
 import { HomeScreenProps } from '../navigation/types';
 import { UserForm } from '../components/form/UserForm';
 import heroImage from '../assets/images/hero.png';
+import { Layout } from '../components/layout/Layout';
 
 const { width } = Dimensions.get('window');
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.hero}>
-        <View style={styles.heroText}>
-          <View style={styles.tag}>
-            <Text style={styles.title}>Seguro Salud Flexible</Text>
+    <Layout>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.hero}>
+          <View style={styles.heroText}>
+            <View style={styles.tag}>
+              <Text style={styles.title}>Seguro Salud Flexible</Text>
+            </View>
+            <Text style={styles.subTitle}>Creado para ti y tu familia</Text>
           </View>
-          <Text style={styles.subTitle}>Creado para ti y tu familia</Text>
+          <Image
+            source={heroImage}
+            style={styles.heroImage}
+            resizeMode="contain"
+            accessible
+            accessibilityLabel="Imagen hero"
+          />
         </View>
-        <Image
-          source={heroImage}
-          style={styles.heroImage}
-          resizeMode="contain"
-          accessible
-          accessibilityLabel="Imagen hero"
-        />
-      </View>
 
-      <View style={styles.formSection}>
-        <Text style={styles.formDesc}>
-          Tú eliges cuánto pagar. Ingresa tus datos, cotiza y recibe nuestra
-          asesoría, 100% online.
-        </Text>
-        <UserForm navigation={navigation} />
-      </View>
-    </ScrollView>
+        <View style={styles.formSection}>
+          <Text style={styles.formDesc}>
+            Tú eliges cuánto pagar. Ingresa tus datos, cotiza y recibe nuestra
+            asesoría, 100% online.
+          </Text>
+          <UserForm navigation={navigation} />
+        </View>
+      </ScrollView>
+    </Layout>
   );
 };
 
