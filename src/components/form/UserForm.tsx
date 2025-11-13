@@ -24,7 +24,7 @@ type Props = {
   navigation: any;
 };
 
-export const HomeForm: React.FC<Props> = ({ navigation }) => {
+export const UserForm: React.FC<Props> = ({ navigation }) => {
   const { dispatch } = useAppContext();
 
   const { control, handleSubmit, formState } = useForm<FormDataHome>({
