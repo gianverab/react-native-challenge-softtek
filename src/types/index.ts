@@ -7,7 +7,8 @@ export type User = {
 export type FormDataHome = {
   dni: string;
   phone: string;
-  acceptedTerms: boolean;
+  acceptedPrivacy: boolean;
+  acceptedCommunication: boolean;
 };
 
 export type Plan = {

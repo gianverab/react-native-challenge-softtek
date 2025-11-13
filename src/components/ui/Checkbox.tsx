@@ -6,6 +6,7 @@ type Props = {
   value: boolean;
   onValueChange: (v: boolean) => void;
   testID?: string;
+  error?: string | undefined;
 };
 
 export const Checkbox: React.FC<Props> = ({
@@ -13,16 +14,20 @@ export const Checkbox: React.FC<Props> = ({
   value,
   onValueChange,
   testID,
+  error,
 }) => {
   return (
-    <TouchableOpacity
-      testID={testID}
-      onPress={() => onValueChange(!value)}
-      activeOpacity={0.8}
-      style={styles.row}>
-      <View style={[styles.box, value && styles.boxChecked]}></View>
-      <Text style={styles.label}>{label}</Text>
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity
+        testID={testID}
+        onPress={() => onValueChange(!value)}
+        activeOpacity={0.8}
+        style={styles.row}>
+        <View style={[styles.box, value && styles.boxChecked]}></View>
+        <Text style={styles.label}>{label}</Text>
+      </TouchableOpacity>
+      {error ? <Text style={styles.error}>{error}</Text> : null}
+    </>
   );
 };
 
@@ -34,13 +39,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#9CA3AF',
     borderRadius: 4,
-    marginRight: 10,
+    marginRight: 12,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
   },
-  boxChecked: { backgroundColor: '#FF1B55', borderColor: '#FF1B55' },
-  label: { fontSize: 14, color: '#111827' },
+  boxChecked: { backgroundColor: '#03050F', borderColor: '#03050F' },
+  label: { fontSize: 14, lineHeight: 24, color: '#0A051E' },
+  error: { color: '#e53935', marginTop: 6, fontSize: 12 },
 });
 
 export default Checkbox;

@@ -15,5 +15,5 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F8F9FD' },
-  content: { flex: 1, padding: 16 },
+  content: { flex: 1, padding: 24, paddingTop: 0 },
 });

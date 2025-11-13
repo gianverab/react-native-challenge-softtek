@@ -30,15 +30,17 @@ export const Input: React.FC<Props> = ({ label, error, testID, ...rest }) => {
 
 const styles = StyleSheet.create({
   container: { marginVertical: 8 },
-  label: { fontSize: 14, marginBottom: 6, color: '#111827' },
+  label: { fontSize: 12, lineHeight: 16, marginBottom: 6, color: '#5E6488' },
   input: {
     borderWidth: 1,
     borderColor: '#d1d5db',
     borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
     fontSize: 16,
+    lineHeight: 24,
     backgroundColor: '#fff',
+    height: 56,
   },
   inputError: { borderColor: '#e53935' },
   error: { color: '#e53935', marginTop: 6, fontSize: 12 },

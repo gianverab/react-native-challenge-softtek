@@ -18,8 +18,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.hero}>
         <View style={styles.heroText}>
-          <Text style={styles.tag}>Seguro Salud Flexible</Text>
-          <Text style={styles.title}>Creado para ti y tu familia</Text>
+          <View style={styles.tag}>
+            <Text style={styles.title}>Seguro Salud Flexible</Text>
+          </View>
+          <Text style={styles.subTitle}>Creado para ti y tu familia</Text>
         </View>
         <Image
           source={heroImage}
@@ -30,8 +32,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         />
       </View>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionDesc}>
+      <View style={styles.formSection}>
+        <Text style={styles.formDesc}>
           Tú eliges cuánto pagar. Ingresa tus datos, cotiza y recibe nuestra
           asesoría, 100% online.
         </Text>
@@ -43,47 +45,59 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
     backgroundColor: '#F8F9FD',
     flexGrow: 1,
   },
   hero: {
-    flexDirection: width > 700 ? 'row' : 'column',
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
+    marginBottom: 24,
+    gap: 24,
   },
   heroText: {
     flex: 1,
-    marginRight: 12,
-  },
-  tag: {
-    color: '#6B7280',
-    fontSize: 14,
-    marginBottom: 6,
   },
   title: {
-    fontSize: 24,
+    color: '#03050F',
+    fontSize: 12,
+    lineHeight: 16,
     fontWeight: '700',
-    color: '#111827',
-    marginBottom: 8,
+    letterSpacing: 0.4,
+  },
+  tag: {
+    backgroundColor: '#00f4e2',
+    width: 150,
+    paddingVertical: 2,
+    paddingHorizontal: 8,
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  subTitle: {
+    fontSize: 28,
+    lineHeight: 36,
+    fontWeight: '700',
+    color: '#03050F',
+    marginTop: 4,
   },
   heroImage: {
-    width: width > 700 ? 220 : '100%',
-    height: width > 700 ? 140 : 200,
-    marginTop: width > 700 ? 0 : 12,
+    width: 136,
+    height: 160,
     borderRadius: 8,
-    backgroundColor: '#F3F4F6',
   },
-  section: {
-    marginTop: 8,
+  formSection: {
+    borderTopColor: '#CCD1EE',
+    borderTopWidth: 1,
+    gap: 24,
+    paddingVertical: 24,
   },
-  sectionDesc: {
-    color: '#6B7280',
-    marginBottom: 12,
+  formDesc: {
+    color: '#03050F',
+    fontSize: 14,
+    lineHeight: 20,
+    letterSpacing: 0.2,
+    fontWeight: '600',
   },
 });
 

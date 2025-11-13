@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -13,10 +13,14 @@ const schema = yup
   .object({
     dni: yup.string().required('El DNI es requerido'),
     phone: yup.string().required('El celular es requerido'),
-    acceptedTerms: yup
+    acceptedPrivacy: yup
       .boolean()
-      .oneOf([true], 'Debes aceptar la política')
-      .required('Debes aceptar la política'),
+      .oneOf([true], 'Debes aceptar la Política de Privacidad')
+      .required('Debes aceptar la Política de Privacidad'),
+    acceptedCommunication: yup
+      .boolean()
+      .oneOf([true], 'Debes aceptar la Política de Comunicaciones')
+      .required('Debes aceptar la Política de Comunicaciones'),
   })
   .required();
 
@@ -32,7 +36,8 @@ export const UserForm: React.FC<Props> = ({ navigation }) => {
     defaultValues: {
       dni: '',
       phone: '',
-      acceptedTerms: false,
+      acceptedPrivacy: false,
+      acceptedCommunication: false,
     },
   });
 
@@ -78,21 +83,41 @@ export const UserForm: React.FC<Props> = ({ navigation }) => {
 
       <Controller
         control={control}
-        name="acceptedTerms"
+        name="acceptedPrivacy"
         render={({ field: { onChange, value } }) => (
           <Checkbox
             label="Acepto la Política de Privacidad"
             value={value}
             onValueChange={onChange}
+            error={formState.errors.acceptedPrivacy?.message as string}
             testID="terms-checkbox"
           />
         )}
       />
 
+      <Controller
+        control={control}
+        name="acceptedCommunication"
+        render={({ field: { onChange, value } }) => (
+          <>
+            <Checkbox
+              label="Acepto la Política de Comunicaciones Comerciales"
+              value={value}
+              onValueChange={onChange}
+              error={formState.errors.acceptedCommunication?.message as string}
+              testID="terms-checkbox"
+            />
+          </>
+        )}
+      />
+
+      <Text style={styles.termsText}>Aplican Términos y Condiciones.</Text>
+
       <Button
         title="Cotiza aquí"
         onPress={handleSubmit(onSubmit)}
         testID="cotiza-button"
+        style={styles.formButton}
       />
     </View>
   );
@@ -100,7 +125,21 @@ export const UserForm: React.FC<Props> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   form: {
-    marginTop: 16,
     marginBottom: 24,
+  },
+  formButton: {
+    marginTop: 36,
+    backgroundColor: '#03050F',
+  },
+  termsText: {
+    fontSize: 12,
+    lineHeight: 20,
+    color: '#03050F',
+    letterSpacing: 0.1,
+    fontWeight: '600',
+    marginTop: 12,
+    textDecorationStyle: 'solid',
+    textDecorationColor: '#03050F',
+    textDecorationLine: 'underline',
   },
 });
