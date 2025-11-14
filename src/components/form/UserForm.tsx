@@ -45,7 +45,7 @@ export const UserForm: React.FC<Props> = ({ navigation }) => {
     dispatch({ type: 'SET_FORM_DATA', payload: data });
     // reset
     dispatch({ type: 'SET_SELECTED_PLAN', payload: null as any });
-    dispatch({ type: 'SET_FOR_WHO', payload: null as any });
+    dispatch({ type: 'SET_OPTION', payload: null as any });
     navigation.navigate('Plans');
   };
 
@@ -130,6 +130,8 @@ const styles = StyleSheet.create({
   formButton: {
     marginTop: 36,
     backgroundColor: '#03050F',
+    borderRadius: 40,
+    paddingHorizontal: 40,
   },
   termsText: {
     fontSize: 12,

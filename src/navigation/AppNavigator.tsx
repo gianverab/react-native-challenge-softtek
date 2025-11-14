@@ -3,7 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from './types';
 import Home from '../screens/Home';
-import { Layout } from '../components/layout/Layout';
+import Plans from '../screens/Plans';
+import Summary from '../screens/Summary';
 
 // Create the navigator
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -11,19 +12,27 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <Layout>
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            headerShown: false,
-          }}>
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{ title: 'Home' }}
-          />
-        </Stack.Navigator>
-      </Layout>
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ title: 'Home' }}
+        />
+        <Stack.Screen
+          name="Plans"
+          component={Plans}
+          options={{ title: 'Plans' }}
+        />
+        <Stack.Screen
+          name="Summary"
+          component={Summary}
+          options={{ title: 'Summary' }}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

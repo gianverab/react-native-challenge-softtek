@@ -41,14 +41,20 @@ export const Button: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#FF1B55',
-    borderRadius: 25,
+    backgroundColor: '#FF1C44',
+    borderRadius: 32,
     paddingVertical: 18,
-    paddingHorizontal: 40,
+    paddingHorizontal: 32,
     alignItems: 'center',
   },
   disabled: { opacity: 0.6 },
-  text: { color: '#fff', fontWeight: '600' },
+  text: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '700',
+    lineHeight: 20,
+    letterSpacing: 0.4,
+  },
 });
 
 export default Button;

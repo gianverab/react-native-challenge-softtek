@@ -5,14 +5,14 @@ type Action =
   | { type: 'SET_FORM_DATA'; payload: FormDataHome }
   | { type: 'SET_API_USER'; payload: User }
   | { type: 'SET_SELECTED_PLAN'; payload: Plan & { finalPrice?: number } }
-  | { type: 'SET_FOR_WHO'; payload: 'me' | 'someone' }
+  | { type: 'SET_OPTION'; payload: 'me' | 'someone' }
   | { type: 'RESET' };
 
 const initialState: AppState = {
   formData: null,
   apiUser: null,
   selectedPlan: null,
-  forWho: null,
+  option: null,
 };
 
 const ctx = createContext<{
@@ -31,8 +31,8 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, apiUser: action.payload };
     case 'SET_SELECTED_PLAN':
       return { ...state, selectedPlan: action.payload };
-    case 'SET_FOR_WHO':
-      return { ...state, forWho: action.payload };
+    case 'SET_OPTION':
+      return { ...state, option: action.payload };
     case 'RESET':
       return initialState;
     default:
