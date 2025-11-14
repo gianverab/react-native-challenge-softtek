@@ -22,5 +22,5 @@ export type AppState = {
   formData: FormDataHome | null;
   apiUser: User | null;
   selectedPlan: (Plan & { finalPrice?: number }) | null;
-  forWho: 'me' | 'someone' | null;
+  option: 'me' | 'someone' | null;
 };
