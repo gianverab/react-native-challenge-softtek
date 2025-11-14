@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { Plan } from '../../types';
 import Button from '../ui/Button';
 import HomeIcon from '../svg/home';

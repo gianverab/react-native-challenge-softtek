@@ -27,7 +27,7 @@ const { width } = Dimensions.get('window');
 
 const PlansScreen: React.FC<PlansScreenProps> = ({ navigation }) => {
   useUser();
-  const { state } = useAppContext();
+  const { state, dispatch } = useAppContext();
 
   const {
     option,
@@ -57,9 +57,8 @@ const PlansScreen: React.FC<PlansScreenProps> = ({ navigation }) => {
   const onSelectPlan = (plan: Plan) => {
     const isSomeone = option === 'someone';
     const finalPrice = isSomeone ? +(plan.price * 0.95).toFixed(2) : plan.price;
-    const { dispatch } = useAppContext();
     dispatch({ type: 'SET_SELECTED_PLAN', payload: { ...plan, finalPrice } });
-    navigation.navigate('Summary' as never);
+    navigation.navigate('Summary');
   };
 
   return (

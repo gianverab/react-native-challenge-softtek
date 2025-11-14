@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from './types';
 import Home from '../screens/Home';
 import Plans from '../screens/Plans';
+import Summary from '../screens/Summary';
 
 // Create the navigator
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -25,6 +26,11 @@ const AppNavigator = () => {
           name="Plans"
           component={Plans}
           options={{ title: 'Plans' }}
+        />
+        <Stack.Screen
+          name="Summary"
+          component={Summary}
+          options={{ title: 'Summary' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
