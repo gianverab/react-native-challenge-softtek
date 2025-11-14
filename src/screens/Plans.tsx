@@ -27,6 +27,7 @@ import Stepper from '../components/ui/Stepper';
 const { width } = Dimensions.get('window');
 
 const PlansScreen: React.FC<PlansScreenProps> = ({ navigation }) => {
+  const scrollRef = useRef<ScrollView>(null);
   useUser();
   const { state, dispatch } = useAppContext();
 
@@ -64,8 +65,15 @@ const PlansScreen: React.FC<PlansScreenProps> = ({ navigation }) => {
 
   return (
     <Layout>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Stepper step={1} total={2} onBack={() => navigation.goBack()} />
+      <ScrollView contentContainerStyle={styles.container} ref={scrollRef}>
+        <Stepper
+          step={1}
+          total={2}
+          onBack={() => {
+            scrollRef.current?.scrollTo({ y: 0, animated: false });
+            navigation.goBack();
+          }}
+        />
         <View style={styles.sectionOptions}>
           <View style={styles.textBox}>
             <Text style={styles.textBoxTitle}>
