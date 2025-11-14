@@ -22,6 +22,7 @@ import { usePlanFilter } from '../hooks/usePlanFilter';
 import Input from '../components/ui/Input';
 import ArrowLeftOffIcon from '../components/svg/arrow-left-off';
 import ArrowRightOnIcon from '../components/svg/arrow-right-on';
+import Stepper from '../components/ui/Stepper';
 
 const { width } = Dimensions.get('window');
 
@@ -64,6 +65,7 @@ const PlansScreen: React.FC<PlansScreenProps> = ({ navigation }) => {
   return (
     <Layout>
       <ScrollView contentContainerStyle={styles.container}>
+        <Stepper step={1} total={2} onBack={() => navigation.goBack()} />
         <View style={styles.sectionOptions}>
           <View style={styles.textBox}>
             <Text style={styles.textBoxTitle}>
@@ -192,8 +194,6 @@ const styles = StyleSheet.create({
   sectionOptions: {
     gap: 32,
     paddingVertical: 24,
-    borderTopColor: '#CCD1EE',
-    borderTopWidth: 1,
   },
   sectionPlans: {
     marginBottom: 32,

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useAppContext } from '../context/AppContext';
 import { Layout } from '../components/layout/Layout';
 import UserGroupIcon from '../components/svg/user-group';
+import Stepper from '../components/ui/Stepper';
 
 const Summary: React.FC<{ navigation: any }> = ({ navigation }) => {
   const { state } = useAppContext();
@@ -11,6 +12,7 @@ const Summary: React.FC<{ navigation: any }> = ({ navigation }) => {
   return (
     <Layout>
       <ScrollView contentContainerStyle={styles.container}>
+        <Stepper step={2} total={2} onBack={() => navigation.goBack()} />
         <Text style={styles.title}>Resumen del seguro</Text>
 
         <View style={styles.card}>
