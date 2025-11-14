@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     borderWidth: 1,
     borderColor: '#f1f5f9',
+    boxShadow: '0px 1px 24px 0px rgba(174, 172, 243, 0.25)',
   },
   optionCheckbox: {
     flexDirection: 'row',

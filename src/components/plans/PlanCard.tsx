@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     maxWidth: width - 72,
     marginLeft: 12,
     minHeight: 600,
+    boxShadow: '0px 1px 24px 0px rgba(174, 172, 243, 0.25)',
   },
   title: {
     fontSize: 24,
