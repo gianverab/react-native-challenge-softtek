@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import { PlansScreenProps } from '../navigation/types';
 import { Layout } from '../components/layout/Layout';
 import { useAppContext } from '../context/AppContext';
@@ -13,6 +7,7 @@ import UserIcon from '../components/svg/user';
 import OtherUserIcon from '../components/svg/other';
 import RadioCheckedIcon from '../components/svg/radio-checked';
 import RadioEmptyIcon from '../components/svg/radio-empty';
+import OptionCard from '../components/plans/OptionCard';
 
 const PlansScreen: React.FC<PlansScreenProps> = ({ navigation }) => {
   const { state, dispatch } = useAppContext();
@@ -38,50 +33,22 @@ const PlansScreen: React.FC<PlansScreenProps> = ({ navigation }) => {
             </Text>
           </View>
           <View style={styles.optionsBox}>
-            <TouchableOpacity
+            <OptionCard
+              title="Para mí"
+              description="Cotiza tu seguro de salud y agrega familiares si así lo deseas."
+              icon={<UserIcon />}
+              checked={option === 'me'}
               onPress={() => onSelectOption('me')}
-              style={[
-                styles.optionCard,
-                option === 'me' && styles.optionSelected,
-              ]}>
-              <View style={styles.optionText}>
-                <View style={styles.optionCheckbox}>
-                  {option === 'me' ? <RadioCheckedIcon /> : <RadioEmptyIcon />}
-                </View>
-                <View style={styles.optionTitle}>
-                  <UserIcon />
-                  <Text style={styles.optionTitleText}>Para mí</Text>
-                </View>
-                <Text style={styles.optionDesc}>
-                  Cotiza tu seguro de salud y agrega familiares si así lo
-                  deseas.
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
+              id="option-me"
+            />
+            <OptionCard
+              title="Para alguien más"
+              description="Realiza una cotización para uno de tus familiares o cualquier persona."
+              icon={<OtherUserIcon />}
+              checked={option === 'someone'}
               onPress={() => onSelectOption('someone')}
-              style={[
-                styles.optionCard,
-                option === 'someone' && styles.optionSelected,
-              ]}>
-              <View style={styles.optionText}>
-                <View style={styles.optionCheckbox}>
-                  {option === 'someone' ? (
-                    <RadioCheckedIcon />
-                  ) : (
-                    <RadioEmptyIcon />
-                  )}
-                </View>
-                <View style={styles.optionTitle}>
-                  <OtherUserIcon />
-                  <Text style={styles.optionTitleText}>Para alguien más</Text>
-                </View>
-                <Text style={styles.optionDesc}>
-                  Realiza una cotización para uno de tus familiares o cualquier
-                  persona.
-                </Text>
-              </View>
-            </TouchableOpacity>
+              id="option-someone"
+            />
           </View>
         </View>
       </ScrollView>
@@ -119,48 +86,6 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     fontWeight: '400',
     letterSpacing: 0.1,
-    color: '#141938',
-  },
-  optionCard: {
-    backgroundColor: '#fff',
-    paddingTop: 16,
-    paddingBottom: 40,
-    paddingHorizontal: 24,
-    borderRadius: 24,
-    borderWidth: 1,
-    borderColor: '#f1f5f9',
-  },
-  optionCheckbox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  optionText: {
-    gap: 8,
-  },
-  optionSelected: {
-    borderColor: '#1f2937',
-    shadowColor: '#000',
-    elevation: 4,
-  },
-  optionTitle: {
-    flexDirection: 'row',
-    gap: 8,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  optionTitleText: {
-    fontWeight: '900',
-    fontSize: 20,
-    lineHeight: 28,
-    letterSpacing: -0.2,
-    color: '#141938',
-  },
-  optionDesc: {
-    fontWeight: '400',
-    fontSize: 12,
-    lineHeight: 20,
-    letterSpacing: 0.2,
     color: '#141938',
   },
 });
