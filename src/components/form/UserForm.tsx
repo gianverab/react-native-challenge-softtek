@@ -130,6 +130,8 @@ const styles = StyleSheet.create({
   formButton: {
     marginTop: 36,
     backgroundColor: '#03050F',
+    borderRadius: 40,
+    paddingHorizontal: 40,
   },
   termsText: {
     fontSize: 12,

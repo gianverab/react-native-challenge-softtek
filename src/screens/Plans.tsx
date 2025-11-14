@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -18,43 +18,49 @@ import OptionCard from '../components/plans/OptionCard';
 import { Plan } from '../types';
 import PlanCard from '../components/plans/PlanCard';
 import { useUser } from '../hooks/useUser';
-import { usePlans } from '../hooks/usePlans';
+import { usePlanFilter } from '../hooks/usePlanFilter';
+import Input from '../components/ui/Input';
+import ArrowLeftOffIcon from '../components/svg/arrow-left-off';
+import ArrowRightOnIcon from '../components/svg/arrow-right-on';
 
 const { width } = Dimensions.get('window');
 
 const PlansScreen: React.FC<PlansScreenProps> = ({ navigation }) => {
-  const { state, dispatch } = useAppContext();
-  const { user, loading: loadingUser } = useUser();
-  const { plans, loading: loadingPlans, fetchPlans } = usePlans();
-  const [option, setOption] = useState<'me' | 'someone' | null>(state.option);
-  const flatListRef = useRef<FlatList>(null);
-  const [pageIndex, setPageIndex] = useState(0);
+  useUser();
+  const { state } = useAppContext();
 
-  useEffect(() => {
-    if (user && option) {
-      fetchPlans(user.birthDay);
-    }
-  }, [user, option, fetchPlans]);
+  const {
+    option,
+    setOption,
+    relativeAge,
+    setRelativeAge,
+    filteredPlans,
+    loadingPlans,
+    pageIndex,
+    setPageIndex,
+    goNext,
+    goPrev,
+    totalPages,
+  } = usePlanFilter();
+
+  const flatRef = useRef<FlatList<any>>(null);
+
+  const disabledPrev = pageIndex === 0;
+  const disabledNext = pageIndex >= totalPages - 1;
 
   const onSelectOption = (val: 'me' | 'someone') => {
     setOption(val);
-    dispatch({ type: 'SET_OPTION', payload: val });
+    setPageIndex(0);
+    flatRef.current?.scrollToOffset({ offset: 0, animated: true });
   };
 
   const onSelectPlan = (plan: Plan) => {
-    const isSomeone = state.option === 'someone' || option === 'someone';
+    const isSomeone = option === 'someone';
     const finalPrice = isSomeone ? +(plan.price * 0.95).toFixed(2) : plan.price;
+    const { dispatch } = useAppContext();
     dispatch({ type: 'SET_SELECTED_PLAN', payload: { ...plan, finalPrice } });
-    //navigation.navigate('Summary');
+    navigation.navigate('Summary' as never);
   };
-
-  const scrollToPage = (index: number) => {
-    if (!flatListRef.current) return;
-    flatListRef.current.scrollToIndex({ index, animated: true });
-    setPageIndex(index);
-  };
-
-  if (loadingUser) return <ActivityIndicator style={{ marginTop: 80 }} />;
 
   return (
     <Layout>
@@ -62,7 +68,7 @@ const PlansScreen: React.FC<PlansScreenProps> = ({ navigation }) => {
         <View style={styles.sectionOptions}>
           <View style={styles.textBox}>
             <Text style={styles.textBoxTitle}>
-              {user?.name ?? ''} ¿Para quién deseas cotizar?
+              {state.apiUser?.name ?? ''} ¿Para quién deseas cotizar?
             </Text>
             <Text style={styles.textBoxSubtitle}>
               Selecciona la opción que se ajuste más a tus necesidades.
@@ -86,19 +92,33 @@ const PlansScreen: React.FC<PlansScreenProps> = ({ navigation }) => {
               id="option-someone"
             />
           </View>
+          {option === 'someone' && (
+            <View>
+              <Input
+                label="Introduce la edad de tu familiar o ser querido"
+                value={relativeAge}
+                onChangeText={(v: string) =>
+                  setRelativeAge(v.replace(/[^0-9]/g, ''))
+                }
+                keyboardType="number-pad"
+                placeholder="Ej: 45"
+              />
+            </View>
+          )}
         </View>
 
         {loadingPlans && <ActivityIndicator />}
 
-        {option && plans.length > 0 && (
+        {(option === 'me' ||
+          (option === 'someone' && relativeAge.length > 0)) && (
           <>
             <FlatList
-              ref={flatListRef}
-              data={plans}
+              ref={flatRef}
+              data={filteredPlans}
               horizontal
               pagingEnabled
-              keyExtractor={item => item.name}
               showsHorizontalScrollIndicator={false}
+              keyExtractor={item => item.name}
               onMomentumScrollEnd={ev => {
                 const index = Math.round(
                   ev.nativeEvent.contentOffset.x / width,
@@ -110,31 +130,54 @@ const PlansScreen: React.FC<PlansScreenProps> = ({ navigation }) => {
                   <PlanCard plan={item} onSelect={() => onSelectPlan(item)} />
                 </View>
               )}
+              ListEmptyComponent={() => (
+                <View style={styles.emptyBox}>
+                  <Text style={styles.emptyText}>
+                    No se encontraron planes disponibles.
+                  </Text>
+                </View>
+              )}
+              contentContainerStyle={styles.sectionPlans}
             />
+            {filteredPlans.length > 0 && (
+              <View style={styles.paginationBox}>
+                <TouchableOpacity
+                  disabled={disabledPrev}
+                  onPress={() => {
+                    goPrev();
+                    flatRef.current?.scrollToIndex({
+                      index: Math.max(0, pageIndex - 1),
+                    });
+                  }}>
+                  {disabledPrev ? (
+                    <ArrowLeftOffIcon />
+                  ) : (
+                    <ArrowRightOnIcon rotate180 />
+                  )}
+                </TouchableOpacity>
 
-            <View style={styles.paginationBox}>
-              <TouchableOpacity
-                disabled={pageIndex === 0}
-                onPress={() => scrollToPage(pageIndex - 1)}>
-                <Text style={styles.arrow}>{'<'}</Text>
-              </TouchableOpacity>
+                <Text style={styles.pageIndicator}>{`${Math.min(
+                  pageIndex + 1,
+                  filteredPlans.length,
+                )} / ${filteredPlans.length}`}</Text>
 
-              <Text style={styles.pageIndicator}>{`${pageIndex + 1}/${
-                plans.length
-              }`}</Text>
-
-              <TouchableOpacity
-                disabled={pageIndex === plans.length - 1}
-                onPress={() => scrollToPage(pageIndex + 1)}>
-                <Text style={styles.arrow}>{'>'}</Text>
-              </TouchableOpacity>
-            </View>
+                <TouchableOpacity
+                  disabled={disabledNext}
+                  onPress={() => {
+                    goNext();
+                    flatRef.current?.scrollToIndex({
+                      index: Math.min(filteredPlans.length - 1, pageIndex + 1),
+                    });
+                  }}>
+                  {disabledNext ? (
+                    <ArrowLeftOffIcon rotate180 />
+                  ) : (
+                    <ArrowRightOnIcon />
+                  )}
+                </TouchableOpacity>
+              </View>
+            )}
           </>
-        )}
-        {option && !loadingPlans && plans.length === 0 && (
-          <Text style={{ marginTop: 16 }}>
-            No hay planes disponibles para tu edad.
-          </Text>
         )}
       </ScrollView>
     </Layout>
@@ -145,6 +188,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F8F9FD',
     flexGrow: 1,
+    paddingBottom: 48,
   },
   sectionOptions: {
     gap: 32,
@@ -153,8 +197,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   sectionPlans: {
-    paddingVertical: 24,
-    gap: 16,
+    marginBottom: 32,
   },
   textBox: {
     gap: 8,
@@ -184,12 +227,28 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   pageIndicator: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 16,
+    fontWeight: '400',
+    lineHeight: 24,
+    letterSpacing: 0.2,
+    color: '#141938',
   },
   arrow: {
     fontSize: 28,
     color: '#141938',
+  },
+  arrowDisabled: {
+    color: '#E5E7EB',
+  },
+  emptyBox: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 24,
+    flexDirection: 'row',
+  },
+  emptyText: {
+    color: '#6B7280',
+    textAlign: 'center',
   },
 });
 export default PlansScreen;
