@@ -11,8 +11,17 @@ import { FormDataHome } from '../../types';
 
 const schema = yup
   .object({
-    dni: yup.string().required('El DNI es requerido'),
-    phone: yup.string().required('El celular es requerido'),
+    dni: yup
+      .string()
+      .required('El DNI es requerido')
+      .matches(/^[0-9]{8}$/, 'El DNI debe tener 8 dígitos numéricos'),
+    phone: yup
+      .string()
+      .required('El celular es requerido')
+      .matches(
+        /^9[0-9]{8}$/,
+        'El celular debe tener 9 dígitos y empezar con 9',
+      ),
     acceptedPrivacy: yup
       .boolean()
       .oneOf([true], 'Debes aceptar la Política de Privacidad')
@@ -90,7 +99,7 @@ export const UserForm: React.FC<Props> = ({ navigation }) => {
             value={value}
             onValueChange={onChange}
             error={formState.errors.acceptedPrivacy?.message as string}
-            testID="terms-checkbox"
+            testID="acceptedPrivacy-checkbox"
           />
         )}
       />
@@ -105,7 +114,7 @@ export const UserForm: React.FC<Props> = ({ navigation }) => {
               value={value}
               onValueChange={onChange}
               error={formState.errors.acceptedCommunication?.message as string}
-              testID="terms-checkbox"
+              testID="acceptedCommunication-checkbox"
             />
           </>
         )}

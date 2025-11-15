@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useAppContext } from '../context/AppContext';
 import { Layout } from '../components/layout/Layout';
 import UserGroupIcon from '../components/svg/user-group';
+import Stepper from '../components/ui/Stepper';
 
 const Summary: React.FC<{ navigation: any }> = ({ navigation }) => {
+  const scrollRef = useRef<ScrollView>(null);
   const { state } = useAppContext();
   const { formData, apiUser, selectedPlan, option } = state;
 
   return (
     <Layout>
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={styles.container} ref={scrollRef}>
+        <Stepper
+          step={2}
+          total={2}
+          onBack={() => {
+            scrollRef.current?.scrollTo({ y: 0, animated: false });
+            navigation.goBack();
+          }}
+        />
         <Text style={styles.title}>Resumen del seguro</Text>
 
         <View style={styles.card}>
