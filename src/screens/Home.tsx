@@ -11,6 +11,7 @@ import { HomeScreenProps } from '../navigation/types';
 import { UserForm } from '../components/form/UserForm';
 import heroImage from '../assets/images/hero.png';
 import { Layout } from '../components/layout/Layout';
+import { TEXT_STYLES } from '../theme/fonts';
 
 const { width } = Dimensions.get('window');
 
@@ -21,9 +22,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         <View style={styles.hero}>
           <View style={styles.heroText}>
             <View style={styles.tag}>
-              <Text style={styles.title}>Seguro Salud Flexible</Text>
+              <Text style={[styles.title, TEXT_STYLES.bold as any]}>
+                Seguro Salud Flexible
+              </Text>
             </View>
-            <Text style={styles.subTitle}>Creado para ti y tu familia</Text>
+            <Text style={[styles.subTitle, TEXT_STYLES.bold as any]}>
+              Creado para ti y tu familia
+            </Text>
           </View>
           <Image
             source={heroImage}
