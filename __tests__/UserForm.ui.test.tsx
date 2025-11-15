@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { render } from '@testing-library/react-native';
 import { UserForm } from '../src/components/form/UserForm';
 import { UserProvider } from '../src/context/AppContext';
 

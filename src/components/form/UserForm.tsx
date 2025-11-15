@@ -99,7 +99,7 @@ export const UserForm: React.FC<Props> = ({ navigation }) => {
             value={value}
             onValueChange={onChange}
             error={formState.errors.acceptedPrivacy?.message as string}
-            testID="terms-checkbox"
+            testID="acceptedPrivacy-checkbox"
           />
         )}
       />
@@ -114,7 +114,7 @@ export const UserForm: React.FC<Props> = ({ navigation }) => {
               value={value}
               onValueChange={onChange}
               error={formState.errors.acceptedCommunication?.message as string}
-              testID="terms-checkbox"
+              testID="acceptedCommunication-checkbox"
             />
           </>
         )}
